@@ -84,5 +84,6 @@ public class PostAllignment : MonoBehaviour
 		_postTransforms.RemoveAt(0);
 		_posts.RemoveAt(0);
 		_currentPlayerCount--;
+		//Test
 	}
 }
