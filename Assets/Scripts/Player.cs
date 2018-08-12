@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+	public bool Npc;
 	private Transform _post;
 	private Transform _nextPost;
 	private int _score;
@@ -22,6 +21,7 @@ public class Player : MonoBehaviour
 	private void Awake()
 	{
 		_isInitialized = false;
+		Npc = true;
 	}
 	
 	public int GetScore()
@@ -32,11 +32,6 @@ public class Player : MonoBehaviour
 	public Color32 GetColor()
 	{
 		return _color;
-	}
-
-	public void SetColor(Color32 color)
-	{
-		_color = color;
 	}
 
 	public void SetPost(Transform post)
@@ -71,31 +66,51 @@ public class Player : MonoBehaviour
 	{
 		if (!_isInitialized)
 			return;
+		
 		_minAngle = Utils.Vector2Extension.GetAngle(_post.position);
 		_maxAngle = Utils.Vector2Extension.GetAngle(_nextPost.position);
 
-		if(_currentAngle <= -1000)
-			_currentAngle = _maxAngle < _minAngle ? ((_maxAngle + _minAngle + 360) / 2.0f)%360 :
-				((_maxAngle + _minAngle) / 2.0f)%360;
-		
-		_transform.eulerAngles  = new Vector3(0, 0, -1*_currentAngle);
-		_transform.position = new Vector3(Mathf.Cos(Mathf.Deg2Rad * -1*_currentAngle), 
-			                      Mathf.Sin(Mathf.Deg2Rad * -1*_currentAngle), 0) * 14;
+		if (_currentAngle <= -1000) //First Time
+		{
+			_currentAngle = _maxAngle < _minAngle
+				? ((_maxAngle + _minAngle + 360) / 2.0f) % 360
+				: ((_maxAngle + _minAngle) / 2.0f) % 360;
+		}
 
-		_currentAngle += Input.GetAxis("Horizontal") * Time.fixedDeltaTime * _speed;
-		_currentAngle = (_currentAngle+360) % 360;
-		
+		HandleInput();
+
+		AdjustPosition();
+
+		_score = 360 / _currentPlayerCount;
+	}
+
+	private void HandleInput()
+	{
+		if (!Npc)
+		{
+			_currentAngle += Input.GetAxis("Horizontal") * Time.fixedDeltaTime * _speed;
+		}
+		else
+		{
+			//TODO Implement Basic AI
+		}
+	}
+
+	private void AdjustPosition()
+	{
+		_currentAngle = (_currentAngle + 360) % 360;
 		if (_currentAngle > _maxAngle)
 		{
 			if (_maxAngle > _minAngle)
 			{
-				_currentAngle = _maxAngle;				
+				_currentAngle = _maxAngle;
 			}
 			else if (_currentAngle < 180)
 			{
 				_currentAngle = _maxAngle;
 			}
 		}
+
 		if (_currentAngle < _minAngle)
 		{
 			if (_maxAngle > _minAngle)
@@ -107,7 +122,9 @@ public class Player : MonoBehaviour
 				_currentAngle = _minAngle;
 			}
 		}
-
-		_score = 360 / _currentPlayerCount;
+		
+		_transform.eulerAngles  = new Vector3(0, 0, -1*_currentAngle);
+		_transform.position = new Vector3(Mathf.Cos(Mathf.Deg2Rad * -1*_currentAngle), 
+			                      Mathf.Sin(Mathf.Deg2Rad * -1*_currentAngle), 0) * 14;
 	}
 }
