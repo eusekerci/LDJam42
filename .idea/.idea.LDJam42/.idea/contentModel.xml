@@ -9,6 +9,8 @@
           <e p="GameSettings.cs" t="Include" />
           <e p="GameUpdater.cs" t="Include" />
           <e p="Player.cs" t="Include" />
+          <e p="PlayerManager.cs" t="Include" />
+          <e p="Post.cs" t="Include" />
           <e p="PostAllignment.cs" t="Include" />
           <e p="Utils" t="Include">
             <e p="Vector2Extension.cs" t="Include" />
