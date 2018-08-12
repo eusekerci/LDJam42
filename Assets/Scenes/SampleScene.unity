@@ -316,7 +316,6 @@ MonoBehaviour:
   _postRoot: {fileID: 437363477}
   _postPrefab: {fileID: 1983927005177290, guid: a3d99b420738e994f8279275f49d0d31,
     type: 2}
-  _circleCenter: {fileID: 1850146349}
 --- !u!114 &1632743777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,7 +356,6 @@ MonoBehaviour:
   _playerRoot: {fileID: 2014218160}
   _playerPrefab: {fileID: 1552406625262552, guid: 6f093574a98f5bd4d81877fce10e83d1,
     type: 2}
-  _circleCenter: {fileID: 1850146349}
 --- !u!1 &1850146348
 GameObject:
   m_ObjectHideFlags: 0

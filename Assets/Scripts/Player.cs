@@ -5,10 +5,25 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 	private Transform _post;
+	private Transform _nextPost;
 	private int _score;
 	private static int _currentPlayerCount;
 	private Color32 _color;
+	private Transform _transform;
+	private SpriteRenderer _renderer;
+	private float _speed = 25f;
 
+	private float _minAngle;
+	private float _maxAngle;
+	private float _currentAngle;
+
+	private bool _isInitialized;
+
+	private void Awake()
+	{
+		_isInitialized = false;
+	}
+	
 	public int GetScore()
 	{
 		return _score;
@@ -28,12 +43,30 @@ public class Player : MonoBehaviour
 	{
 		_post = post;
 	}
+
+	public void SetNextPost(Transform post)
+	{
+		_nextPost = post;
+	}
 	
 	public void Init(int score, int playerCount, Color32 color)
 	{
 		_score = score;
 		_currentPlayerCount = playerCount;
 		_color = color;
+		_transform = gameObject.GetComponent<Transform>();
+		_renderer = gameObject.GetComponent<SpriteRenderer>();
+		_renderer.color = color;
+		_currentAngle = -1234;
+		
+//		_minAngle = Utils.Vector2Extension.GetAngle(_post.position);
+//		_maxAngle = Utils.Vector2Extension.GetAngle(_nextPost.position);
+//		_currentAngle = -1 * _minAngle;
+//		_transform.eulerAngles  = new Vector3(0, 0, _currentAngle);
+//		_transform.position = new Vector3(Mathf.Cos(Mathf.Deg2Rad * _currentAngle), 
+//			                      Mathf.Sin(Mathf.Deg2Rad * _currentAngle), 0) * 14;
+		
+		_isInitialized = true;
 	}
 
 	public static void SetPlayerCount(int playerCount)
@@ -43,6 +76,45 @@ public class Player : MonoBehaviour
 	
 	private void FixedUpdate ()
 	{
+		if (!_isInitialized)
+			return;
+		_minAngle = Utils.Vector2Extension.GetAngle(_post.position);
+		_maxAngle = Utils.Vector2Extension.GetAngle(_nextPost.position);
+
+		if(_currentAngle <= -1000)
+			_currentAngle = _maxAngle < _minAngle ? ((_maxAngle + _minAngle + 360) / 2.0f)%360 :
+				((_maxAngle + _minAngle) / 2.0f)%360;
+		
+		_transform.eulerAngles  = new Vector3(0, 0, -1*_currentAngle);
+		_transform.position = new Vector3(Mathf.Cos(Mathf.Deg2Rad * -1*_currentAngle), 
+			                      Mathf.Sin(Mathf.Deg2Rad * -1*_currentAngle), 0) * 14;
+
+		_currentAngle += Input.GetAxis("Horizontal") * Time.fixedDeltaTime * _speed;
+		_currentAngle = (_currentAngle+360) % 360;
+		
+		if (_currentAngle > _maxAngle)
+		{
+			if (_maxAngle > _minAngle)
+			{
+				_currentAngle = _maxAngle;				
+			}
+			else if (_currentAngle < 180)
+			{
+				_currentAngle = _maxAngle;
+			}
+		}
+		if (_currentAngle < _minAngle)
+		{
+			if (_maxAngle > _minAngle)
+			{
+				_currentAngle = _minAngle;
+			}
+			else if (_currentAngle > 180)
+			{
+				_currentAngle = _minAngle;
+			}
+		}
+
 		_score = 360 / _currentPlayerCount;
 	}
 }

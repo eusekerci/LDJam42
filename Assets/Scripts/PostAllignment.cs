@@ -50,6 +50,12 @@ public class PostAllignment : MonoBehaviour
 			_playerManager.GetPlayer(i).SetPost(_postTransforms[i]);
 			_posts.Add(_postTransforms[i].GetComponent<Post>());
 		}
+
+		for (int i = 0; i < _currentPlayerCount; i++)
+		{
+			int a = i - 1 < 0 ? _currentPlayerCount - 1 : i-1;
+			_playerManager.GetPlayer(i).SetNextPost(_postTransforms[a]);
+		}
 		
 		var direction = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f)).normalized;
 
