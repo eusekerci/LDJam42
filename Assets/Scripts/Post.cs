@@ -45,9 +45,6 @@ public class Post : MonoBehaviour {
 		float x;
 		float y;
 
-		//float angle = Vector3.Angle(Vector3.right, _position.normalized);
-		//float angle = Quaternion.FromToRotation(Vector3.back, (Vector3)
-		//_position.normalized - Vector3.right).eulerAngles.z;
 		float angle = Utils.Vector2Extension.GetAngle(_position);
 				
 		for (int i = 0; i < _segments; i++)

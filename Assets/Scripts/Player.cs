@@ -59,13 +59,6 @@ public class Player : MonoBehaviour
 		_renderer.color = color;
 		_currentAngle = -1234;
 		
-//		_minAngle = Utils.Vector2Extension.GetAngle(_post.position);
-//		_maxAngle = Utils.Vector2Extension.GetAngle(_nextPost.position);
-//		_currentAngle = -1 * _minAngle;
-//		_transform.eulerAngles  = new Vector3(0, 0, _currentAngle);
-//		_transform.position = new Vector3(Mathf.Cos(Mathf.Deg2Rad * _currentAngle), 
-//			                      Mathf.Sin(Mathf.Deg2Rad * _currentAngle), 0) * 14;
-		
 		_isInitialized = true;
 	}
 
