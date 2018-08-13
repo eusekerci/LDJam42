@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -10,6 +11,8 @@ public class Ball : MonoBehaviour
 	private float _speed;
 	private bool _isInitiliazed;
 	private Transform _transform;
+	[SerializeField] private PlayerManager _playerManager;
+	[SerializeField] private PostAllignment _postAllignment;
 
 	private void Awake()
 	{
@@ -41,6 +44,20 @@ public class Ball : MonoBehaviour
 		if (_transform.position.magnitude > 15f)
 		{
 			ChangeDirection();
+			List<Transform> posts = _postAllignment.GetPostTransforms();
+			float angle = Utils.Vector2Extension.GetAngle((Vector2) _transform.position.normalized);
+			int min = 0;
+			float minValue = 361;
+			for (int j = 0; j < posts.Count; j++)
+			{
+				float postAngle = Utils.Vector2Extension.GetAngle(posts[j].position.normalized);
+				if ((angle - postAngle < minValue) && (angle - postAngle > 0))
+				{
+					min = j;
+					minValue = angle - postAngle;
+				}
+			}
+			_playerManager.KillPlayer(min);
 		} 
 	}
 

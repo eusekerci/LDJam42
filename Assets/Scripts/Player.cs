@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
 	private Color32 _color;
 	private Transform _transform;
 	private SpriteRenderer _renderer;
-	private float _speed = 25f;
+	private float _speed = 150f;
 
 	private float _minAngle;
 	private float _maxAngle;
@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
 	private void Awake()
 	{
 		_isInitialized = false;
-		Npc = true;
+		Npc = false;
 	}
 	
 	public int GetScore()
@@ -32,6 +32,11 @@ public class Player : MonoBehaviour
 	public Color32 GetColor()
 	{
 		return _color;
+	}
+	
+	public Transform GetPost()
+	{
+		return _post;
 	}
 
 	public void SetPost(Transform post)

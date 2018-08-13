@@ -16,12 +16,5 @@ public class GameUpdater : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		if (Input.GetKeyUp(KeyCode.Space))
-		{
-			_postAllignment.Kill();
-			Destroy(_playerManager.GetPlayers()[0].gameObject);
-			_playerManager.GetPlayers().RemoveAt(0);
-			Player.SetPlayerCount(_playerManager.GetPlayers().Count);
-		}
 	}
 }

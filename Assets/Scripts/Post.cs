@@ -39,6 +39,16 @@ public class Post : MonoBehaviour {
 		_position = new Vector2(pos.x, pos.y);
 		_angle = angle;
 	}
+
+	public float GetAngle()
+	{
+		return _angle;
+	}
+
+	public void SetAngle(float angle)
+	{
+		_angle = angle;
+	}
 	
 	private void CreatePoints ()
 	{

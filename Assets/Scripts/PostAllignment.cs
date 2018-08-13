@@ -23,6 +23,8 @@ public class PostAllignment : MonoBehaviour
 		
 		InitializePosts();
 		
+		playerManager.SetPostAllignment(this);
+		
 		_isInitialized = true;
 	}
 	
@@ -39,6 +41,11 @@ public class PostAllignment : MonoBehaviour
 		AllignPosts();
 	}
 
+	public List<Transform> GetPostTransforms()
+	{
+		return _postTransforms;
+	}
+
 	private void InitializePosts()
 	{
 		_posts = new List<Post>();
@@ -47,6 +54,7 @@ public class PostAllignment : MonoBehaviour
 		for (int i = 0; i < _currentPlayerCount; i++)
 		{
 			_postTransforms.Add(Instantiate(_postPrefab, _postRoot).transform);
+			_postTransforms[i].name = "Post" + (i + 1).ToString();
 			_playerManager.GetPlayer(i).SetPost(_postTransforms[i]);
 			_posts.Add(_postTransforms[i].GetComponent<Post>());
 		}
@@ -82,13 +90,28 @@ public class PostAllignment : MonoBehaviour
 		}
 	}
 
-	public void Kill()
+	public void KillPost(int i)
 	{
-		if (_currentPlayerCount <= 0)
-			return;
-		Destroy(_postTransforms[0].gameObject);
-		_postTransforms.RemoveAt(0);
-		_posts.RemoveAt(0);
+		_postTransforms[i].gameObject.SetActive(false);
+		_postTransforms.RemoveAt(i);
+		_posts.RemoveAt(i);
 		_currentPlayerCount--;
+
+		for (int a = 0; a < _posts.Count; a++)
+		{
+			_posts[a].SetAngle(360/_currentPlayerCount);
+		}
+	}
+
+	public void KillPost(string name)
+	{
+		for (int i = 0; i < _postTransforms.Count; i++)
+		{
+			if (name == _postTransforms[i].gameObject.name)
+			{
+				KillPost(i);
+				return;
+			}
+		}
 	}
 }
