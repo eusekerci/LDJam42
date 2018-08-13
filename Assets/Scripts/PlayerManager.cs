@@ -56,6 +56,8 @@ public class PlayerManager : MonoBehaviour {
 		_playerTransforms.RemoveAt(i);
 		_players.RemoveAt(i);
 		Player.SetPlayerCount(GetPlayers().Count);
+		_postAllignment.UpdatePlayerNextPosts();
+
 	}
 
 	public void KillPlayer(string name)

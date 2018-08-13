@@ -86,7 +86,7 @@ public class PostAllignment : MonoBehaviour
 		}
 	}
 
-	private void UpdatePlayerNextPosts()
+	public void UpdatePlayerNextPosts()
 	{
 		for (int i = 0; i < _currentPlayerCount; i++)
 		{
@@ -106,8 +106,6 @@ public class PostAllignment : MonoBehaviour
 		{
 			_posts[a].SetAngle(360/_currentPlayerCount);
 		}
-
-		UpdatePlayerNextPosts();
 	}
 
 	public void KillPost(string name)
