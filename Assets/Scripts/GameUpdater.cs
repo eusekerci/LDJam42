@@ -5,7 +5,7 @@ public class GameUpdater : MonoBehaviour
 	private GameSettings _gameSettings;
 	[SerializeField] private PostAllignment _postAllignment;
 	[SerializeField] private PlayerManager _playerManager;
-		
+	
 	private void Start()
 	{
 		_gameSettings = new GameSettings();
