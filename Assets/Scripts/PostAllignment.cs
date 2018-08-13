@@ -59,11 +59,7 @@ public class PostAllignment : MonoBehaviour
 			_posts.Add(_postTransforms[i].GetComponent<Post>());
 		}
 
-		for (int i = 0; i < _currentPlayerCount; i++)
-		{
-			int a = i - 1 < 0 ? _currentPlayerCount - 1 : i-1;
-			_playerManager.GetPlayer(i).SetNextPost(_postTransforms[a]);
-		}
+		UpdatePlayerNextPosts();
 		
 		var direction = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f)).normalized;
 
@@ -90,6 +86,15 @@ public class PostAllignment : MonoBehaviour
 		}
 	}
 
+	private void UpdatePlayerNextPosts()
+	{
+		for (int i = 0; i < _currentPlayerCount; i++)
+		{
+			int a = i - 1 < 0 ? _currentPlayerCount - 1 : i-1;
+			_playerManager.GetPlayer(i).SetNextPost(_postTransforms[a]);
+		}
+	}
+
 	public void KillPost(int i)
 	{
 		_postTransforms[i].gameObject.SetActive(false);
@@ -101,6 +106,8 @@ public class PostAllignment : MonoBehaviour
 		{
 			_posts[a].SetAngle(360/_currentPlayerCount);
 		}
+
+		UpdatePlayerNextPosts();
 	}
 
 	public void KillPost(string name)

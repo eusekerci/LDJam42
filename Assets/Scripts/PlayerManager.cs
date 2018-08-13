@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour {
 
@@ -48,6 +49,8 @@ public class PlayerManager : MonoBehaviour {
 
 	public void KillPlayer(int i)
 	{
+		if(_players.Count == 1)
+			SceneManager.LoadScene(0);
 		_postAllignment.KillPost(_players[i].GetPost().gameObject.name);
 		_playerTransforms[i].gameObject.SetActive(false);
 		_playerTransforms.RemoveAt(i);

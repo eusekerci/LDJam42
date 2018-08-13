@@ -75,7 +75,7 @@ public class Player : MonoBehaviour
 		_minAngle = Utils.Vector2Extension.GetAngle(_post.position);
 		_maxAngle = Utils.Vector2Extension.GetAngle(_nextPost.position);
 
-		if (_currentAngle <= -1000) //First Time
+		if (_currentAngle <= -1000)
 		{
 			_currentAngle = _maxAngle < _minAngle
 				? ((_maxAngle + _minAngle + 360) / 2.0f) % 360
@@ -93,7 +93,7 @@ public class Player : MonoBehaviour
 	{
 		if (!Npc)
 		{
-			_currentAngle += Input.GetAxis("Horizontal") * Time.fixedDeltaTime * _speed;
+			_currentAngle -= Input.GetAxis("Horizontal") * Time.fixedDeltaTime * _speed;
 		}
 		else
 		{
@@ -103,6 +103,7 @@ public class Player : MonoBehaviour
 
 	private void AdjustPosition()
 	{
+		//TODO Find a better splution
 		_currentAngle = (_currentAngle + 360) % 360;
 		if (_currentAngle > _maxAngle)
 		{
