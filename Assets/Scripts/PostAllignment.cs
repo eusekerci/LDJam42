@@ -41,11 +41,6 @@ public class PostAllignment : MonoBehaviour
 		AllignPosts();
 	}
 
-	public List<Transform> GetPostTransforms()
-	{
-		return _postTransforms;
-	}
-
 	private void InitializePosts()
 	{
 		_posts = new List<Post>();
@@ -72,6 +67,11 @@ public class PostAllignment : MonoBehaviour
 			_posts[i].Init(_playerManager.GetPlayer(i));
 		}
 	}
+
+	public List<Transform> GetPostTransforms()
+	{
+		return _postTransforms;
+	}
 	
 	private void AllignPosts()
 	{
@@ -95,7 +95,7 @@ public class PostAllignment : MonoBehaviour
 		}
 	}
 
-	public void KillPost(int i)
+	private void KillPost(int i)
 	{
 		_postTransforms[i].gameObject.SetActive(false);
 		_postTransforms.RemoveAt(i);
@@ -108,11 +108,11 @@ public class PostAllignment : MonoBehaviour
 		}
 	}
 
-	public void KillPost(string name)
+	public void KillPost(string n)
 	{
 		for (int i = 0; i < _postTransforms.Count; i++)
 		{
-			if (name == _postTransforms[i].gameObject.name)
+			if (n == _postTransforms[i].gameObject.name)
 			{
 				KillPost(i);
 				return;

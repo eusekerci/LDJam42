@@ -36,12 +36,6 @@ public class PlayerManager : MonoBehaviour {
 		_postAllignment = postAllignment;
 	}
 
-	public List<Player> GetPlayers()
-	{
-		return _players;
-	}
-	
-	
 	public Player GetPlayer(int i)
 	{
 		return _players[i];
@@ -55,20 +49,8 @@ public class PlayerManager : MonoBehaviour {
 		_playerTransforms[i].gameObject.SetActive(false);
 		_playerTransforms.RemoveAt(i);
 		_players.RemoveAt(i);
-		Player.SetPlayerCount(GetPlayers().Count);
+		Player.SetPlayerCount(_players.Count);
 		_postAllignment.UpdatePlayerNextPosts();
 
-	}
-
-	public void KillPlayer(string name)
-	{
-		for (int i = 0; i < _playerTransforms.Count; i++)
-		{
-			if (name == _playerTransforms[i].gameObject.name)
-			{
-				KillPlayer(i);
-				return;
-			}
-		}
 	}
 }
