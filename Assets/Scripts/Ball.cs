@@ -12,8 +12,8 @@ public class Ball : MonoBehaviour
 	private float _speed;
 	private bool _isInitiliazed;
 	private Transform _transform;
-	[SerializeField] private PlayerManager _playerManager;
-	[SerializeField] private PostAllignment _postAllignment;
+	private PlayerManager _playerManager;
+	private PostAllignment _postAllignment;
 	private bool _isInvincible;
 	private float _invincibleTime = 0.5f;
 
@@ -21,14 +21,11 @@ public class Ball : MonoBehaviour
 	{
 		_isInitiliazed = false;
 	}
-
-	private void Start()
-	{
-		Init();
-	}
 	
-	private void Init()
+	public void Init(PlayerManager pm, PostAllignment pa)
 	{
+		_playerManager = pm;
+		_postAllignment = pa;
 		_isInvincible = false;
 		_direction = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f)).normalized;
 		_speed = 15f;

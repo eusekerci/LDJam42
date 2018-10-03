@@ -5,16 +5,14 @@ public class GameUpdater : MonoBehaviour
 	private GameSettings _gameSettings;
 	[SerializeField] private PostAllignment _postAllignment;
 	[SerializeField] private PlayerManager _playerManager;
+	[SerializeField] private BallManager _ballManager;
 	
 	private void Start()
 	{
 		_gameSettings = new GameSettings();
 
-		_playerManager.Init(_gameSettings.InitialPlayerCount, _gameSettings.ColorList);
-		_postAllignment.Init(_gameSettings.InitialPlayerCount, _gameSettings.CircleRange, _playerManager);
-	}
-
-	private void FixedUpdate()
-	{
+		_ballManager.Init(_gameSettings.BallCount);
+		_playerManager.Init(_ballManager, _gameSettings.InitialPlayerCount, _gameSettings.ColorList);
+		_postAllignment.Init(_playerManager, _gameSettings.InitialPlayerCount, _gameSettings.CircleRange);
 	}
 }

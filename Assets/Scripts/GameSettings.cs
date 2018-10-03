@@ -6,6 +6,7 @@ public class GameSettings
 	public readonly int InitialPlayerCount = 8;
 	public readonly float CircleRange = 15;
 	public readonly float MinScore = 30;
+	public readonly int BallCount = 1;
 
 	public readonly List<Color> ColorList = new List<Color>()
 	{

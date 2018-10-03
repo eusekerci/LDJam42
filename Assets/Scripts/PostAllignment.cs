@@ -15,7 +15,7 @@ public class PostAllignment : MonoBehaviour
 	[SerializeField] private Transform _postRoot;
 	[SerializeField] private GameObject _postPrefab;
 	
-	public void Init(int playerCount, float circleRange, PlayerManager playerManager)
+	public void Init(PlayerManager playerManager, int playerCount, float circleRange)
 	{
 		_currentPlayerCount = playerCount;
 		_circleRange = circleRange;

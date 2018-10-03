@@ -10,11 +10,14 @@ public class PlayerManager : MonoBehaviour {
 	private List<Transform> _playerTransforms;
 	private List<Player> _players;
 
+	private BallManager _ballManager;
 	private PostAllignment _postAllignment;
 	private int _initialPlayerCount;
 
-	public void Init(int playerCount, List<Color> colorlist)
+	public void Init(BallManager ballManager, int playerCount, List<Color> colorlist)
 	{
+		_ballManager = ballManager;
+		
 		_players = new List<Player>();
 		_playerTransforms = new List<Transform>();
 		

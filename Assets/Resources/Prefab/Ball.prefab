@@ -209,6 +209,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b77f410d46560642900b3a11ffbf931, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerManager: {fileID: 0}
+  _postAllignment: {fileID: 0}
 --- !u!212 &212785026824204916
 SpriteRenderer:
   m_ObjectHideFlags: 1
