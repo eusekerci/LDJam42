@@ -11,7 +11,7 @@ public class GameUpdater : MonoBehaviour
 	{
 		_gameSettings = new GameSettings();
 
-		_ballManager.Init(_gameSettings.BallCount);
+		_ballManager.Init(_gameSettings.BallCount, _playerManager, _postAllignment);
 		_playerManager.Init(_ballManager, _gameSettings.InitialPlayerCount, _gameSettings.ColorList);
 		_postAllignment.Init(_playerManager, _gameSettings.InitialPlayerCount, _gameSettings.CircleRange);
 	}

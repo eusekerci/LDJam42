@@ -8,11 +8,17 @@ public class BallManager : MonoBehaviour {
 	[SerializeField] private Transform _ballRoot;
 	[SerializeField] private GameObject _ballPrefab;
 	
+	private PlayerManager _playerManager;
+	private PostAllignment _postAllignment;
+	
 	private List<Transform> _ballTransforms;
 	private List<Ball> _balls;
-	
-	public void Init(int ballCount)
+
+	public void Init(int ballCount, PlayerManager pm, PostAllignment pa)
 	{
+		_playerManager = pm;
+		_postAllignment = pa;
+		
 		_balls = new List<Ball>();
 		_ballTransforms = new List<Transform>();
 		
@@ -25,7 +31,7 @@ public class BallManager : MonoBehaviour {
 
 		for (int i = 0; i < ballCount; i++)
 		{
-			_balls[i].Init();
+			_balls[i].Init(_playerManager,_postAllignment);
 		}
 	}
 
