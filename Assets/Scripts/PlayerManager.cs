@@ -30,7 +30,7 @@ public class PlayerManager : MonoBehaviour {
 		
 		for (int i = 0; i < playerCount; i++)
 		{
-			_players[i].Init(360 / playerCount, playerCount, colorlist[i]);
+			_players[i].Init((Mathf.PI * 2) / playerCount, playerCount, colorlist[i]);
 		}
 	}
 
@@ -53,7 +53,5 @@ public class PlayerManager : MonoBehaviour {
 		_playerTransforms.RemoveAt(i);
 		_players.RemoveAt(i);
 		Player.SetPlayerCount(_players.Count);
-		_postAllignment.UpdatePlayerNextPosts();
-
 	}
 }

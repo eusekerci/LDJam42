@@ -4,27 +4,27 @@ public class Player : MonoBehaviour
 {
 	public bool Npc;
 	private Transform _post;
-	private Transform _nextPost;
-	private int _score;
+	private float _score;
 	private static int _currentPlayerCount;
 	private Color32 _color;
 	private Transform _transform;
 	private SpriteRenderer _renderer;
-	private float _speed = 150f;
+	private float _speed = 2f;
 
 	private float _minAngle;
-	private float _maxAngle;
 	private float _currentAngle;
 
 	private bool _isInitialized;
+	private bool _isFirstFrame;
 
 	private void Awake()
 	{
 		_isInitialized = false;
+		_isFirstFrame = true;
 		Npc = false;
 	}
 	
-	public int GetScore()
+	public float GetScore()
 	{
 		return _score;
 	}
@@ -43,13 +43,8 @@ public class Player : MonoBehaviour
 	{
 		_post = post;
 	}
-
-	public void SetNextPost(Transform post)
-	{
-		_nextPost = post;
-	}
 	
-	public void Init(int score, int playerCount, Color32 color)
+	public void Init(float score, int playerCount, Color32 color)
 	{
 		_score = score;
 		_currentPlayerCount = playerCount;
@@ -57,7 +52,7 @@ public class Player : MonoBehaviour
 		_transform = gameObject.GetComponent<Transform>();
 		_renderer = gameObject.GetComponent<SpriteRenderer>();
 		_renderer.color = color;
-		_currentAngle = -1234;
+		_currentAngle = 0;
 		
 		_isInitialized = true;
 	}
@@ -70,23 +65,23 @@ public class Player : MonoBehaviour
 	private void FixedUpdate ()
 	{
 		if (!_isInitialized)
-			return;
-		
-		_minAngle = Utils.Vector2Extension.GetAngle(_post.position);
-		_maxAngle = Utils.Vector2Extension.GetAngle(_nextPost.position);
-
-		if (_currentAngle <= -1000)
 		{
-			_currentAngle = _maxAngle < _minAngle
-				? ((_maxAngle + _minAngle + 360) / 2.0f) % 360
-				: ((_maxAngle + _minAngle) / 2.0f) % 360;
+			return;
+		}
+
+		_minAngle = Utils.Vector2Extension.GetRadiant(_post.position);
+
+		if (_isFirstFrame)
+		{
+			_currentAngle = (_minAngle + (_score / 2));
+			_isFirstFrame = false;
 		}
 
 		HandleInput();
 
 		AdjustPosition();
 
-		_score = 360 / _currentPlayerCount;
+		_score = (Mathf.PI * 2) / _currentPlayerCount;
 	}
 
 	private void HandleInput()
@@ -103,34 +98,16 @@ public class Player : MonoBehaviour
 
 	private void AdjustPosition()
 	{
-		//TODO Find a better splution
-		_currentAngle = (_currentAngle + 360) % 360;
-		if (_currentAngle > _maxAngle)
-		{
-			if (_maxAngle > _minAngle)
-			{
-				_currentAngle = _maxAngle;
-			}
-			else if (_currentAngle < 180)
-			{
-				_currentAngle = _maxAngle;
-			}
-		}
-
 		if (_currentAngle < _minAngle)
 		{
-			if (_maxAngle > _minAngle)
-			{
-				_currentAngle = _minAngle;
-			}
-			else if (_currentAngle > 180)
-			{
-				_currentAngle = _minAngle;
-			}
+			_currentAngle = _minAngle;
 		}
-		
-		_transform.eulerAngles  = new Vector3(0, 0, -1*_currentAngle);
-		_transform.position = new Vector3(Mathf.Cos(Mathf.Deg2Rad * -1*_currentAngle), 
-			                      Mathf.Sin(Mathf.Deg2Rad * -1*_currentAngle), 0) * 14;
+		else if (_currentAngle > _minAngle + _score)
+		{
+			_currentAngle = _minAngle + _score;
+		}
+		_transform.eulerAngles  = new Vector3(0, 0, Mathf.Rad2Deg*-1*_currentAngle);
+		_transform.position = new Vector3(Mathf.Cos(-1*_currentAngle), 
+			                      Mathf.Sin(-1*_currentAngle), 0) * 14;
 	}
 }

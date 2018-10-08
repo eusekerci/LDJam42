@@ -53,8 +53,6 @@ public class PostAllignment : MonoBehaviour
 			_playerManager.GetPlayer(i).SetPost(_postTransforms[i]);
 			_posts.Add(_postTransforms[i].GetComponent<Post>());
 		}
-
-		UpdatePlayerNextPosts();
 		
 		var direction = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f)).normalized;
 
@@ -62,7 +60,7 @@ public class PostAllignment : MonoBehaviour
 		{
 			_postTransforms[i].position = direction * _circleRange;
 			direction = Utils.Vector2Extension.Rotate(direction, 
-				_playerManager.GetPlayer(i).GetScore());
+				_playerManager.GetPlayer(i).GetScore()  * Mathf.Rad2Deg);
 			
 			_posts[i].Init(_playerManager.GetPlayer(i));
 		}
@@ -80,18 +78,9 @@ public class PostAllignment : MonoBehaviour
 		for (int i = 0; i < _currentPlayerCount; i++)
 		{
 			_postTransforms[i].position = direction * _circleRange;
-			direction = Utils.Vector2Extension.Rotate(direction, _playerManager.GetPlayer(i).GetScore());
+			direction = Utils.Vector2Extension.Rotate(direction, _playerManager.GetPlayer(i).GetScore() * Mathf.Rad2Deg);
 			_posts[i].UpdateParams(_postTransforms[i].position, 
-				_playerManager.GetPlayer(i).GetScore());
-		}
-	}
-
-	public void UpdatePlayerNextPosts()
-	{
-		for (int i = 0; i < _currentPlayerCount; i++)
-		{
-			int a = i - 1 < 0 ? _currentPlayerCount - 1 : i-1;
-			_playerManager.GetPlayer(i).SetNextPost(_postTransforms[a]);
+				_playerManager.GetPlayer(i).GetScore()  * Mathf.Rad2Deg);
 		}
 	}
 
