@@ -11,6 +11,9 @@ public class Player : MonoBehaviour
 	private SpriteRenderer _renderer;
 	private float _speed = 2f;
 
+	private BallManager _ballManager;
+	private Ball _closestBall;
+
 	private float _minAngle;
 	private float _currentAngle;
 
@@ -21,7 +24,7 @@ public class Player : MonoBehaviour
 	{
 		_isInitialized = false;
 		_isFirstFrame = true;
-		Npc = false;
+		Npc = true;
 	}
 	
 	public float GetScore()
@@ -44,8 +47,9 @@ public class Player : MonoBehaviour
 		_post = post;
 	}
 	
-	public void Init(float score, int playerCount, Color32 color)
+	public void Init(BallManager ballManager, float score, int playerCount, Color32 color)
 	{
+		_ballManager = ballManager;
 		_score = score;
 		_currentPlayerCount = playerCount;
 		_color = color;
@@ -92,7 +96,16 @@ public class Player : MonoBehaviour
 		}
 		else
 		{
-			//TODO Implement Basic AI
+			_closestBall = _ballManager.GetClosestBall(_transform);
+			if (Utils.Vector2Extension.GetRadiant(_transform.position) >
+			    Utils.Vector2Extension.GetRadiant(_closestBall.transform.position))
+			{
+				_currentAngle -= Time.fixedDeltaTime * _speed;
+			}
+			else
+			{
+				_currentAngle += Time.fixedDeltaTime * _speed;
+			}
 		}
 	}
 

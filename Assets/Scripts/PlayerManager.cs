@@ -30,7 +30,7 @@ public class PlayerManager : MonoBehaviour {
 		
 		for (int i = 0; i < playerCount; i++)
 		{
-			_players[i].Init((Mathf.PI * 2) / playerCount, playerCount, colorlist[i]);
+			_players[i].Init(_ballManager, (Mathf.PI * 2) / playerCount, playerCount, colorlist[i]);
 		}
 	}
 
