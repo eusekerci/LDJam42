@@ -51,20 +51,28 @@ public class Ball : MonoBehaviour
 	private void KillPlayer()
 	{
 		List<Transform> posts = _postAllignment.GetPostTransforms();
-		float angle = Utils.Vector2Extension.GetAngle((Vector2) _transform.position.normalized);
-		int min = 0;
-		float minValue = 361;
+		float angle = Utils.Vector2Extension.GetRadiant(_transform.position.normalized);
+		int minIndex = -1;
+		int maxIndex = -1;
+		float minValue = float.MaxValue;
+		float maxValue = float.MinValue;
+			
 		for (int j = 0; j < posts.Count; j++)
 		{
-			float postAngle = Utils.Vector2Extension.GetAngle(posts[j].position.normalized);
+			float postAngle = Utils.Vector2Extension.GetRadiant(posts[j].position.normalized);
 			if ((angle - postAngle < minValue) && (angle - postAngle > 0))
 			{
-				min = j;
+				minIndex = j;
 				minValue = angle - postAngle;
+			}
+			else if (postAngle > maxValue)
+			{
+				maxValue = postAngle;
+				maxIndex = j;
 			}
 		}
 
-		_playerManager.KillPlayer(min);
+		_playerManager.KillPlayer(minIndex != -1 ? minIndex : maxIndex);
 	}
 
 	private void ChangeDirection()

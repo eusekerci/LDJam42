@@ -16,14 +16,6 @@ namespace Utils
 			return v;
 		}
 
-		public static float GetAngle(Vector2 v)
-		{
-			float dot = v.normalized.x * 1 + 0;  
-			float det = 0 - v.normalized.y * 1;
-			float angle = Mathf.Rad2Deg * Mathf.Atan2(det, dot);
-			return (angle + 360) % 360;
-		}
-
 		public static float GetRadiant(Vector2 v)
 		{
 			float dot = v.normalized.x * 1 + 0;  

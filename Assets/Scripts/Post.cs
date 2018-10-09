@@ -37,17 +37,12 @@ public class Post : MonoBehaviour {
 	public void UpdateParams(Vector2 pos, float angle)
 	{
 		_position = new Vector2(pos.x, pos.y);
-		_angle = angle;
-	}
-
-	public float GetAngle()
-	{
-		return _angle;
+		_angle = angle * Mathf.Deg2Rad;
 	}
 
 	public void SetAngle(float angle)
 	{
-		_angle = angle;
+		_angle = angle * Mathf.Deg2Rad;
 	}
 	
 	private void CreatePoints ()
@@ -55,12 +50,12 @@ public class Post : MonoBehaviour {
 		float x;
 		float y;
 
-		float angle = Utils.Vector2Extension.GetAngle(_position);
+		float angle = Utils.Vector2Extension.GetRadiant(_position);
 				
 		for (int i = 0; i < _segments; i++)
 		{
-			x = Mathf.Cos(Mathf.Deg2Rad * angle) * _radius.x;
-			y = Mathf.Sin(Mathf.Deg2Rad * angle) * _radius.y * -1;
+			x = Mathf.Cos(angle) * _radius.x;
+			y = Mathf.Sin(angle) * _radius.y * -1;
 
 			_line.SetPosition (i,new Vector3(x,y,0));
 
