@@ -97,12 +97,15 @@ public class Player : MonoBehaviour
 		else
 		{
 			_closestBall = _ballManager.GetClosestBall(_transform);
-			if (Utils.Vector2Extension.GetRadiant(_transform.position) >
-			    Utils.Vector2Extension.GetRadiant(_closestBall.transform.position))
+			if (Utils.Vector2Extension.GetRadiant(_transform.position) - 
+			    Utils.Vector2Extension.GetRadiant(_closestBall.transform.position) 
+			    > Time.deltaTime * _speed)
 			{
 				_currentAngle -= Time.fixedDeltaTime * _speed;
 			}
-			else
+			else if (Utils.Vector2Extension.GetRadiant(_closestBall.transform.position) -
+					Utils.Vector2Extension.GetRadiant(_transform.position) 
+					> Time.deltaTime * _speed)
 			{
 				_currentAngle += Time.fixedDeltaTime * _speed;
 			}

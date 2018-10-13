@@ -84,7 +84,7 @@ public class Ball : MonoBehaviour
 	{
 		Vector2 normal = (Vector2) _transform.position.normalized;
 		_direction = 2 * (Vector2.Dot(_direction, normal)) * normal - _direction;
-		_direction = (-1 * _direction + modifier.normalized).normalized;
+		_direction = (-1 * _direction).normalized;
 	}
 
 	private void OnTriggerEnter2D(Collider2D other)
